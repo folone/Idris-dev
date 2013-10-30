@@ -4,6 +4,7 @@ import Builtins
 
 import Prelude.Maybe
 import Prelude.List
+import Prelude.Bifunctor
 
 data Either a b
   = Left a
@@ -62,6 +63,13 @@ maybeToEither : e -> Maybe a -> Either e a
 maybeToEither def (Just j) = Right j
 maybeToEither def Nothing  = Left  def
 
+--------------------------------------------------------------------------------
+-- Instances
+--------------------------------------------------------------------------------
+
+instance Bifunctor Either where
+  bimap f _ (Left a)  = Left (f a)
+  bimap _ g (Right b) = Right (g b)
 
 --------------------------------------------------------------------------------
 -- Injectivity of constructors
